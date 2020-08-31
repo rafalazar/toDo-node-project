@@ -4,8 +4,7 @@ const descripcion = {
 };
 
 const estado = {
-    alias: 'e',
-    default: true
+    alias: 'e'
 };
 
 const argv = require('yargs')
@@ -18,6 +17,9 @@ const argv = require('yargs')
     })
     .command('borrar', 'Borra la tarea del listado To Do', {
         descripcion
+    })
+    .command('listar', 'Lista las tareas según el estado que se le envíe.', {
+        estado
     })
     .help()
     .argv;

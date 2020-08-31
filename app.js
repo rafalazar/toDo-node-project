@@ -12,7 +12,7 @@ switch (comando) {
         console.log(tarea);
         break;
     case 'listar':
-        let listado = toDo.getListado();
+        let listado = toDo.getListado(argv.estado);
         for(let tarea of listado){
             console.log('=========== Por Hacer ============');
             console.log(tarea.descripcion);

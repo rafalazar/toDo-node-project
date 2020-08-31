@@ -17,20 +17,24 @@ const guardarDb = () => {
 }
 
 const cargarDb = () => {
-
     try {
         listToDo = require('../db/data.json');
     } catch (error) {
         listToDo = [];
     }
-    
-
 }
 
-const getListado = () => {
+const getListado = (estado) => {
+
     cargarDb();
 
-    return listToDo;
+    if(estado === undefined){
+        return listToDo;
+    }else{
+        let filterList = listToDo.filter(task => task.estado === JSON.parse(estado));
+        listToDo = filterList;
+        return listToDo;
+    }
 }
 
 const actualizar = (descripcion, estado = true) => {
@@ -41,7 +45,7 @@ const actualizar = (descripcion, estado = true) => {
     });
 
     if(index >= 0){
-        listToDo[index].estado = estado;
+        listToDo[index].estado = JSON.parse(estado);
         guardarDb();
         return true;
     }else{
