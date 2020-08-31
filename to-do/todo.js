@@ -11,12 +11,65 @@ const guardarDb = () => {
             throw new Error('Ocurrió un problema :c', err);
         }
 
-        console.log('La tarea ha sido creada satisfactoriamente!');
+        //console.log('La tarea ha sido creada satisfactoriamente!');
     });
 
 }
 
+const cargarDb = () => {
+
+    try {
+        listToDo = require('../db/data.json');
+    } catch (error) {
+        listToDo = [];
+    }
+    
+
+}
+
+const getListado = () => {
+    cargarDb();
+
+    return listToDo;
+}
+
+const actualizar = (descripcion, estado = true) => {
+
+    cargarDb();
+    let index = listToDo.findIndex( tarea =>{
+        return tarea.descripcion === descripcion;
+    });
+
+    if(index >= 0){
+        listToDo[index].estado = estado;
+        guardarDb();
+        return true;
+    }else{
+        return false;
+    }
+
+}
+
+const borrar = (descripcion) => {
+    cargarDb();
+
+    let newListToDo = listToDo.filter(tarea =>{
+        return tarea.descripcion !== descripcion;
+    });
+
+    if (listToDo.length === newListToDo.length) {
+        return false;
+    } else {
+        listToDo = newListToDo;
+        guardarDb();
+        return true;
+    }
+
+}
+
 const crear = (descripcion) => {
+
+    cargarDb();
 
     let toDo = {
         descripcion,
@@ -32,5 +85,8 @@ const crear = (descripcion) => {
 };
 
 module.exports = {
-    crear
+    crear,
+    getListado,
+    actualizar,
+    borrar
 }

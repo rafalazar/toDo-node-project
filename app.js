@@ -1,5 +1,6 @@
 const argv = require('./config/yargs').argv;
 const toDo = require('./to-do/todo');
+const colors = require('colors');
 
 //console.log(argv);
 
@@ -11,10 +12,21 @@ switch (comando) {
         console.log(tarea);
         break;
     case 'listar':
-        console.log('Listar los ToDo');
+        let listado = toDo.getListado();
+        for(let tarea of listado){
+            console.log('=========== Por Hacer ============');
+            console.log(tarea.descripcion);
+            console.log(`Estado: ${tarea.estado}`);
+            console.log('==================================');
+        }
         break;
     case 'actualizar':
-        console.log('Actualizar los ToDo');
+        let actualizado = toDo.actualizar(argv.descripcion, argv.estado);
+        console.log('El ESTADO ha sido actualizado.');
+        break;
+    case 'borrar':
+        let borrado = toDo.borrar(argv.descripcion);
+        console.log(borrado);
         break;
     default:
         console.log('Comando no reconocido.');
